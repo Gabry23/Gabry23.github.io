@@ -4,401 +4,365 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gabriele Risino</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Outfit:wght@300;400;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Outfit:wght@400;600;900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0c0c10;
-  --bg2: #111117;
-  --border: #222230;
-  --text: #d8d8e8;
-  --muted: #555568;
-  --accent: #4f8ef7;
-  --accent-dim: rgba(79,142,247,0.12);
-  --white: #f0f0f8;
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: #0c0c10;
+  color: #d8d8e8;
   font-family: 'IBM Plex Mono', monospace;
   font-size: 13px;
   line-height: 1.7;
-  overflow-x: hidden;
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  min-height: 100vh;
-  min-width: 0;
-}
-
-/* SIDEBAR */
+/* ---- SIDEBAR ---- */
 .sidebar {
   position: fixed;
   top: 0; left: 0; bottom: 0;
   width: 260px;
-  background: var(--bg2);
-  border-right: 1px solid var(--border);
+  background: #111117;
+  border-right: 1px solid #222230;
   display: flex;
   flex-direction: column;
   padding: 40px 28px;
-  z-index: 50;
-  overflow: hidden;
+  z-index: 100;
 }
 
-.sidebar::before {
-  content: '';
-  position: absolute;
-  top: -80px; left: -80px;
-  width: 260px; height: 260px;
-  background: radial-gradient(circle, rgba(79,142,247,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
+.s-label { font-size: 10px; color: #555568; letter-spacing: 0.2em; margin-bottom: 36px; }
+.s-name { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 900; color: #f0f0f8; line-height: 1.1; letter-spacing: -1px; margin-bottom: 6px; }
+.s-role { font-size: 11px; color: #4f8ef7; letter-spacing: 0.05em; margin-bottom: 40px; }
 
-.s-index { font-size: 10px; color: var(--muted); letter-spacing: 0.2em; margin-bottom: 40px; }
-.s-name { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 900; color: var(--white); line-height: 1.1; letter-spacing: -1px; margin-bottom: 6px; }
-.s-role { font-size: 11px; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 40px; }
-
-.s-nav { list-style: none; display: flex; flex-direction: column; gap: 2px; flex: 1; }
-
+.s-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
 .s-nav a {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 12px; color: var(--muted); text-decoration: none;
+  display: block; padding: 8px 12px;
+  color: #555568; text-decoration: none;
   font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-  border-radius: 4px; transition: all 0.2s; border: 1px solid transparent;
+  border-radius: 4px; border: 1px solid transparent;
+  transition: all 0.2s;
 }
-.s-nav a:hover { color: var(--text); background: rgba(79,142,247,0.06); border-color: var(--border); }
-.s-nav a .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); transition: background 0.2s; }
-.s-nav a:hover .dot { background: var(--accent); }
+.s-nav a:hover { color: #d8d8e8; background: rgba(79,142,247,0.06); border-color: #222230; }
 
-.s-contacts { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
-.s-contact-link {
-  display: flex; align-items: center; gap: 8px; color: var(--muted);
-  text-decoration: none; font-size: 11px; transition: color 0.2s;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+.s-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+.s-link { display: flex; align-items: center; gap: 8px; color: #555568; text-decoration: none; font-size: 11px; transition: color 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.s-link:hover { color: #4f8ef7; }
+
+.s-badge {
+  margin-top: 16px; display: flex; align-items: center; gap: 8px;
+  font-size: 10px; color: #4ec94e; letter-spacing: 0.08em;
 }
-.s-contact-link:hover { color: var(--accent); }
-.s-contact-link svg { flex-shrink: 0; }
-
-.s-available {
-  margin-top: 20px; display: flex; align-items: center; gap: 8px;
-  font-size: 10px; color: #4ec94e; letter-spacing: 0.1em;
+.s-badge span {
+  width: 6px; height: 6px; background: #4ec94e;
+  border-radius: 50%; box-shadow: 0 0 6px #4ec94e;
+  animation: blink 2s infinite;
 }
-.s-available::before {
-  content: ''; width: 6px; height: 6px; background: #4ec94e;
-  border-radius: 50%; box-shadow: 0 0 6px #4ec94e; animation: pulse 2s infinite;
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ---- MAIN ---- */
+.main {
+  margin-left: 260px;
 }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-/* MAIN */
-.main { margin-left: 260px; min-height: 100vh; min-width: 0; overflow: hidden; }
-
-/* HERO */
+/* ---- HERO ---- */
 .hero {
-  min-height: 100vh; display: flex; flex-direction: column;
-  justify-content: center; padding: 80px 64px;
-  position: relative; border-bottom: 1px solid var(--border);
-  min-width: 0;
-}
-.hero::after {
-  content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
-  height: 1px; background: linear-gradient(90deg, var(--accent), transparent);
+  min-height: 100vh;
+  padding: 80px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid #222230;
+  position: relative;
 }
 
-.hero-eyebrow {
-  font-size: 11px; color: var(--muted); letter-spacing: 0.2em;
-  text-transform: uppercase; margin-bottom: 24px;
-  display: flex; align-items: center; gap: 10px;
+.hero-tag {
+  font-size: 11px; color: #555568; letter-spacing: 0.2em;
+  text-transform: uppercase; margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
 }
-.hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+.hero-tag::before { content: ''; display: block; width: 30px; height: 1px; background: #4f8ef7; }
 
-.hero-headline {
+.hero-title {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(56px, 7vw, 96px);
-  font-weight: 900; line-height: 0.92;
-  letter-spacing: -4px; color: var(--white); margin-bottom: 32px;
+  font-size: clamp(52px, 6vw, 88px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -3px;
+  color: #f0f0f8;
+  margin-bottom: 36px;
 }
-.hero-headline em { font-style: normal; color: var(--accent); display: block; }
+.hero-title .blue { color: #4f8ef7; display: block; }
 
-.hero-bio { width: 100%; max-width: 520px; min-width: 280px; color: var(--muted); font-size: 13px; line-height: 1.9; margin-bottom: 48px; word-break: normal; overflow-wrap: normal; }
+.hero-bio {
+  max-width: 460px;
+  color: #555568;
+  font-size: 13px;
+  line-height: 1.9;
+  margin-bottom: 44px;
+}
 
-.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
 .btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 11px 24px; font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; letter-spacing: 0.08em; text-decoration: none;
-  border-radius: 3px; transition: all 0.2s; cursor: pointer; border: none;
+  display: inline-block; padding: 11px 24px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  letter-spacing: 0.08em; text-decoration: none;
+  border-radius: 3px; transition: all 0.2s;
 }
-.btn-solid { background: var(--accent); color: #fff; }
-.btn-solid:hover { background: #6aa3ff; transform: translateY(-1px); }
-.btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-.btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.btn-blue { background: #4f8ef7; color: #fff; }
+.btn-blue:hover { background: #6aa3ff; transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: #555568; border: 1px solid #222230; }
+.btn-ghost:hover { border-color: #4f8ef7; color: #4f8ef7; transform: translateY(-1px); }
 
-.hero-num {
-  position: absolute; right: 48px; bottom: 48px;
-  font-family: 'Outfit', sans-serif; font-size: 160px; font-weight: 900;
-  color: rgba(255,255,255,0.02); line-height: 1; letter-spacing: -8px;
-  pointer-events: none; user-select: none;
+/* ---- SECTIONS ---- */
+.section {
+  padding: 80px 64px;
+  border-bottom: 1px solid #222230;
 }
 
-/* SECTIONS */
-.section { padding: 80px 64px; border-bottom: 1px solid var(--border); }
-
-.section-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 56px; }
-.section-num { font-size: 11px; color: var(--accent); }
-.section-title {
-  font-family: 'Outfit', sans-serif; font-size: clamp(28px, 4vw, 44px);
-  font-weight: 900; color: var(--white); letter-spacing: -2px; line-height: 1;
-}
+.sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 52px; }
+.sec-num { font-size: 11px; color: #4f8ef7; }
+.sec-title { font-family: 'Outfit', sans-serif; font-size: clamp(28px, 3vw, 44px); font-weight: 900; color: #f0f0f8; letter-spacing: -2px; line-height: 1; }
 
 /* SKILLS */
-.skills-category { margin-bottom: 32px; }
-.skills-cat-label { font-size: 10px; color: var(--accent); letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 12px; }
-.skills-row { display: flex; flex-wrap: wrap; gap: 8px; }
-.skill-pill {
-  padding: 6px 16px; background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 100px; font-size: 12px; color: var(--text); transition: all 0.2s;
+.skill-group { margin-bottom: 28px; }
+.skill-cat { font-size: 10px; color: #4f8ef7; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 10px; }
+.skill-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill {
+  padding: 5px 14px; background: #111117;
+  border: 1px solid #222230; border-radius: 100px;
+  font-size: 12px; color: #d8d8e8; transition: all 0.2s;
 }
-.skill-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.pill:hover { border-color: #4f8ef7; color: #4f8ef7; background: rgba(79,142,247,0.1); }
 
-/* TIMELINE */
-.timeline { position: relative; padding-left: 32px; }
-.timeline::before {
-  content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
-  width: 1px; background: linear-gradient(180deg, var(--accent), transparent);
-}
-.tl-item { position: relative; margin-bottom: 56px; }
+/* EXPERIENCE */
+.timeline { padding-left: 28px; border-left: 1px solid #4f8ef7; display: flex; flex-direction: column; gap: 48px; }
+.tl-item { position: relative; }
 .tl-item::before {
-  content: ''; position: absolute; left: -36px; top: 8px;
-  width: 8px; height: 8px; border-radius: 50%; background: var(--accent);
-  box-shadow: 0 0 10px rgba(79,142,247,0.5);
+  content: ''; position: absolute; left: -33px; top: 6px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #4f8ef7; box-shadow: 0 0 8px rgba(79,142,247,0.6);
 }
-.tl-period { font-size: 10px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
-.tl-role { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 600; color: var(--white); letter-spacing: -0.5px; margin-bottom: 4px; }
-.tl-company { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
-.tl-desc { color: var(--muted); font-size: 12px; line-height: 1.9; max-width: 600px; }
-.tl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-.tl-tag { font-size: 10px; padding: 3px 10px; background: var(--accent-dim); border: 1px solid rgba(79,142,247,0.2); color: var(--accent); border-radius: 2px; }
+.tl-date { font-size: 10px; color: #4f8ef7; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+.tl-role { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 600; color: #f0f0f8; letter-spacing: -0.3px; margin-bottom: 4px; }
+.tl-company { font-size: 12px; color: #555568; margin-bottom: 14px; }
+.tl-desc { color: #555568; font-size: 12px; line-height: 1.9; max-width: 580px; }
+.tl-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.chip { font-size: 10px; padding: 3px 10px; background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.25); color: #4f8ef7; border-radius: 2px; }
 
 /* EDUCATION */
-.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
 .edu-card {
-  background: var(--bg2); border: 1px solid var(--border);
+  background: #111117; border: 1px solid #222230;
   padding: 28px; border-radius: 4px; transition: border-color 0.2s;
   position: relative; overflow: hidden;
 }
-.edu-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: linear-gradient(90deg, var(--accent), transparent);
+.edu-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, #4f8ef7, transparent);
   opacity: 0; transition: opacity 0.3s;
 }
-.edu-card:hover { border-color: rgba(79,142,247,0.3); }
-.edu-card:hover::before { opacity: 1; }
-.edu-year { font-size: 10px; color: var(--muted); letter-spacing: 0.15em; margin-bottom: 12px; }
-.edu-degree { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 600; color: var(--white); letter-spacing: -0.3px; margin-bottom: 6px; line-height: 1.2; }
-.edu-uni { font-size: 11px; color: var(--accent); margin-bottom: 14px; }
-.edu-desc { font-size: 11px; color: var(--muted); line-height: 1.8; }
-.edu-award { margin-top: 12px; display: inline-flex; align-items: center; gap: 6px; font-size: 10px; color: #f7c94f; letter-spacing: 0.1em; }
+.edu-card:hover { border-color: rgba(79,142,247,0.35); }
+.edu-card:hover::after { opacity: 1; }
+.edu-year { font-size: 10px; color: #555568; letter-spacing: 0.15em; margin-bottom: 10px; }
+.edu-degree { font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 600; color: #f0f0f8; letter-spacing: -0.3px; margin-bottom: 6px; line-height: 1.2; }
+.edu-uni { font-size: 11px; color: #4f8ef7; margin-bottom: 12px; }
+.edu-desc { font-size: 11px; color: #555568; line-height: 1.8; }
+.edu-award { margin-top: 12px; font-size: 10px; color: #f7c94f; }
 
 /* CONTACT */
-.contact-row { display: flex; flex-direction: column; gap: 2px; }
-.contact-card {
+.contact-list { display: flex; flex-direction: column; gap: 3px; }
+.contact-row {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 24px; background: var(--bg2); border: 1px solid var(--border);
-  text-decoration: none; transition: all 0.2s; border-radius: 3px;
+  padding: 18px 22px; background: #111117; border: 1px solid #222230;
+  text-decoration: none; border-radius: 3px; transition: all 0.2s;
 }
-.contact-card:hover { border-color: var(--accent); background: var(--accent-dim); transform: translateX(4px); }
-.contact-label { font-size: 10px; color: var(--muted); letter-spacing: 0.2em; text-transform: uppercase; min-width: 80px; }
-.contact-value { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 600; color: var(--white); flex: 1; padding-left: 24px; }
-.contact-arrow { color: var(--muted); font-size: 18px; transition: all 0.2s; }
-.contact-card:hover .contact-arrow { color: var(--accent); transform: translateX(4px); }
+.contact-row:hover { border-color: #4f8ef7; background: rgba(79,142,247,0.06); transform: translateX(4px); }
+.cr-label { font-size: 10px; color: #555568; letter-spacing: 0.2em; text-transform: uppercase; width: 80px; }
+.cr-val { font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; color: #f0f0f8; }
+.cr-arr { color: #555568; transition: all 0.2s; }
+.contact-row:hover .cr-arr { color: #4f8ef7; transform: translateX(3px); }
 
-/* ANIMATIONS */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+/* REVEAL ANIMATION */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s, transform 0.5s; }
+.reveal.on { opacity: 1; transform: none; }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-@media (max-width: 768px) {
-  .layout { grid-template-columns: 1fr; }
-  .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 24px; }
+@media (max-width: 720px) {
+  .sidebar { position: relative; width: 100%; height: auto; border-right: none; border-bottom: 1px solid #222230; }
   .main { margin-left: 0; }
-  .hero { padding: 48px 24px; }
-  .section { padding: 56px 24px; }
-  .edu-grid { grid-template-columns: 1fr; }
-  .hero-num { display: none; }
+  .hero, .section { padding: 48px 24px; }
 }
 </style>
 </head>
 <body>
-<div class="layout">
 
-  <aside class="sidebar">
-    <div class="s-index">portfolio.v2</div>
-    <div class="s-name">Gabriele<br>Risino</div>
-    <div class="s-role">AI Software Engineer</div>
-    <ul class="s-nav">
-      <li><a href="#skills"><span class="dot"></span>Skills</a></li>
-      <li><a href="#experience"><span class="dot"></span>Experience</a></li>
-      <li><a href="#education"><span class="dot"></span>Education</a></li>
-      <li><a href="#contact"><span class="dot"></span>Contact</a></li>
-    </ul>
-    <div class="s-contacts">
-      <a href="/cdn-cgi/l/email-protection#cfa8aeadbda6aaa3aabda6bca6a1a08fa8a2aea6a3e1aca0a2" class="s-contact-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        <span class="__cf_email__" data-cfemail="f5929497879c909990879c869c9b9ab59298949c99db969a98">[email&#160;protected]</span>
+<aside class="sidebar">
+  <div class="s-label">portfolio.v2</div>
+  <div class="s-name">Gabriele<br>Risino</div>
+  <div class="s-role">AI Software Engineer</div>
+  <ul class="s-nav">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="s-bottom">
+    <a href="mailto:gabrielerisino@gmail.com" class="s-link">✉ gabrielerisino@gmail.com</a>
+    <a href="https://github.com/Gabry23" target="_blank" class="s-link">⌥ github.com/Gabry23</a>
+    <a href="tel:+393420943167" class="s-link">✆ +39 342 094 3167</a>
+    <div class="s-badge"><span></span>Available for hire</div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">AI Engineer</div>
+    <h1 class="hero-title">
+      Building<br>
+      <span class="blue">intelligent</span>
+      systems.
+    </h1>
+    <p class="hero-bio">
+      Passionate about AI and software engineering. Studies in Artificial Intelligence at Università di Bologna. Currently designing NLP pipelines and multi-agent architectures in production environments.
+    </p>
+    <div class="hero-btns">
+      <a href="mailto:gabrielerisino@gmail.com" class="btn btn-blue">Get in touch</a>
+      <a href="https://github.com/Gabry23" target="_blank" class="btn btn-ghost">GitHub →</a>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Skills</h2>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-cat">Languages</div>
+      <div class="skill-pills">
+        <span class="pill">Python</span><span class="pill">C#</span>
+        <span class="pill">Java</span><span class="pill">JavaScript</span>
+        <span class="pill">HTML / CSS</span><span class="pill">SQL</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-cat">AI & Machine Learning</div>
+      <div class="skill-pills">
+        <span class="pill">LLMs</span><span class="pill">LangChain</span>
+        <span class="pill">TensorFlow</span><span class="pill">NLP</span>
+        <span class="pill">NER</span><span class="pill">Deep Learning</span>
+        <span class="pill">Computer Vision</span><span class="pill">Multi-Agent Systems</span>
+        <span class="pill">NumPy</span><span class="pill">pandas</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-cat">Infrastructure & Tools</div>
+      <div class="skill-pills">
+        <span class="pill">Docker</span><span class="pill">Azure</span>
+        <span class="pill">Flask</span><span class="pill">RabbitMQ</span>
+        <span class="pill">JWT</span><span class="pill">Git</span>
+        <span class="pill">Postgres</span><span class="pill">MySQL</span>
+        <span class="pill">MCP Protocol</span><span class="pill">.NET</span>
+        <span class="pill">Power Automate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Experience</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-date">Apr 2025 — Present</div>
+        <div class="tl-role">AI Software Engineer</div>
+        <div class="tl-company">Sistemi e Automazioni</div>
+        <p class="tl-desc">Building production-ready AI applications focused on NLP and multi-agent systems. Designed Named Entity Recognition solutions and multi-agent architectures communicating via MCP and custom protocols. Developed automatic summarization pipelines using chunking, LLM-based validation, and cosine similarity. Deployed AI services via Flask, ensured async execution with RabbitMQ, and implemented JWT-based security.</p>
+        <div class="tl-chips">
+          <span class="chip">LangChain</span><span class="chip">NLP</span>
+          <span class="chip">LLMs</span><span class="chip">Flask</span>
+          <span class="chip">RabbitMQ</span><span class="chip">MCP</span>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">Oct 2022 — Jun 2024</div>
+        <div class="tl-role">Junior Software Engineer</div>
+        <div class="tl-company">Cluster Reply</div>
+        <p class="tl-desc">Member of a specialized Microsoft technologies team. Delivered projects for clients including Toyota. Daily development with C#/.NET, JavaScript, SQL, and Power Automate within CRM and Azure environments.</p>
+        <div class="tl-chips">
+          <span class="chip">C# / .NET</span><span class="chip">Azure</span>
+          <span class="chip">Microsoft CRM</span><span class="chip">Power Automate</span><span class="chip">SQL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section" id="education">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Education</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-year">2021 — 2024</div>
+        <div class="edu-degree">Studies in Artificial Intelligence</div>
+        <div class="edu-uni">Alma Mater Studiorum — Università di Bologna</div>
+        <p class="edu-desc">Extensive coursework in Deep Learning, Machine Learning, Computer Vision, and NLP. Excelled in Applied AI group projects.</p>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-year">2018 — 2021</div>
+        <div class="edu-degree">B.Sc. Computer Science</div>
+        <div class="edu-uni">Università della Calabria — Rende</div>
+        <p class="edu-desc">Broad foundation in Python, Java, and C++. Projects across multiple domains.</p>
+        <div class="edu-award">⭐ Best Students Award — 2019</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Contact</h2>
+    </div>
+    <div class="contact-list">
+      <a href="mailto:gabrielerisino@gmail.com" class="contact-row reveal">
+        <span class="cr-label">Email</span>
+        <span class="cr-val">gabrielerisino@gmail.com</span>
+        <span class="cr-arr">→</span>
       </a>
-      <a href="https://github.com/Gabry23" target="_blank" class="s-contact-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-        github.com/Gabry23
+      <a href="https://github.com/Gabry23" target="_blank" class="contact-row reveal">
+        <span class="cr-label">GitHub</span>
+        <span class="cr-val">github.com/Gabry23</span>
+        <span class="cr-arr">→</span>
       </a>
-      <a href="tel:+393420943167" class="s-contact-link">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.35 2 2 0 0 1 3.6 1.1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.69a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        +39 342 094 3167
+      <a href="tel:+393420943167" class="contact-row reveal">
+        <span class="cr-label">Phone</span>
+        <span class="cr-val">+39 342 094 3167</span>
+        <span class="cr-arr">→</span>
       </a>
     </div>
-    <div class="s-available">Available for hire</div>
-  </aside>
+  </section>
 
-  <main class="main">
+</main>
 
-    <section class="hero" id="home">
-      <div class="hero-eyebrow">AI Engineer</div>
-      <h1 class="hero-headline">
-        Building<br>
-        <em>intelligent</em>
-        systems.
-      </h1>
-      <p class="hero-bio">
-        Passionate about AI and software engineering. Studies in Artificial Intelligence at Università di Bologna. Currently designing NLP pipelines and multi-agent architectures in production environments.
-      </p>
-      <div class="hero-cta">
-        <a href="/cdn-cgi/l/email-protection#bed9dfdcccd7dbd2dbccd7cdd7d0d1fed9d3dfd7d290ddd1d3" class="btn btn-solid">Get in touch</a>
-        <a href="https://github.com/Gabry23" target="_blank" class="btn btn-outline">GitHub →</a>
-      </div>
-      <div class="hero-num">GR</div>
-    </section>
+<script>
+const els = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('on'), i * 60);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.05 });
+els.forEach(el => obs.observe(el));
+</script>
 
-    <section class="section" id="skills">
-      <div class="section-header reveal">
-        <span class="section-num">01</span>
-        <h2 class="section-title">Skills</h2>
-      </div>
-      <div class="skills-category reveal">
-        <div class="skills-cat-label">Languages</div>
-        <div class="skills-row">
-          <span class="skill-pill">Python</span><span class="skill-pill">C#</span>
-          <span class="skill-pill">Java</span><span class="skill-pill">JavaScript</span>
-          <span class="skill-pill">HTML / CSS</span><span class="skill-pill">SQL</span>
-        </div>
-      </div>
-      <div class="skills-category reveal">
-        <div class="skills-cat-label">AI & Machine Learning</div>
-        <div class="skills-row">
-          <span class="skill-pill">LLMs</span><span class="skill-pill">LangChain</span>
-          <span class="skill-pill">TensorFlow</span><span class="skill-pill">NLP</span>
-          <span class="skill-pill">NER</span><span class="skill-pill">Deep Learning</span>
-          <span class="skill-pill">Computer Vision</span><span class="skill-pill">Multi-Agent Systems</span>
-          <span class="skill-pill">NumPy</span><span class="skill-pill">pandas</span>
-        </div>
-      </div>
-      <div class="skills-category reveal">
-        <div class="skills-cat-label">Infrastructure & Tools</div>
-        <div class="skills-row">
-          <span class="skill-pill">Docker</span><span class="skill-pill">Azure</span>
-          <span class="skill-pill">Flask</span><span class="skill-pill">RabbitMQ</span>
-          <span class="skill-pill">JWT</span><span class="skill-pill">Git</span>
-          <span class="skill-pill">Postgres</span><span class="skill-pill">MySQL</span>
-          <span class="skill-pill">MCP Protocol</span><span class="skill-pill">.NET</span>
-          <span class="skill-pill">Power Automate</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="experience">
-      <div class="section-header reveal">
-        <span class="section-num">02</span>
-        <h2 class="section-title">Experience</h2>
-      </div>
-      <div class="timeline">
-        <div class="tl-item reveal">
-          <div class="tl-period">Apr 2025 — Present</div>
-          <div class="tl-role">AI Software Engineer</div>
-          <div class="tl-company">Sistemi e Automazioni</div>
-          <p class="tl-desc">Building production-ready AI applications focused on NLP and multi-agent systems. Designed Named Entity Recognition solutions and multi-agent architectures communicating via MCP and custom protocols. Developed automatic summarization pipelines using chunking, LLM-based validation, and cosine similarity. Deployed AI services via Flask, ensured async execution with RabbitMQ, and implemented JWT-based security.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">LangChain</span><span class="tl-tag">NLP</span>
-            <span class="tl-tag">LLMs</span><span class="tl-tag">Flask</span>
-            <span class="tl-tag">RabbitMQ</span><span class="tl-tag">MCP</span>
-          </div>
-        </div>
-        <div class="tl-item reveal">
-          <div class="tl-period">Oct 2022 — Jun 2024</div>
-          <div class="tl-role">Junior Software Engineer</div>
-          <div class="tl-company">Cluster Reply</div>
-          <p class="tl-desc">Member of a specialized Microsoft technologies team. Delivered projects for clients including Toyota. Daily development with C#/.NET, JavaScript, SQL, and Power Automate within CRM and Azure environments.</p>
-          <div class="tl-tags">
-            <span class="tl-tag">C# / .NET</span><span class="tl-tag">Azure</span>
-            <span class="tl-tag">Microsoft CRM</span><span class="tl-tag">Power Automate</span>
-            <span class="tl-tag">SQL</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="education">
-      <div class="section-header reveal">
-        <span class="section-num">03</span>
-        <h2 class="section-title">Education</h2>
-      </div>
-      <div class="edu-grid">
-        <div class="edu-card reveal">
-          <div class="edu-year">2021 — 2024</div>
-          <div class="edu-degree">Studies in Artificial Intelligence</div>
-          <div class="edu-uni">Alma Mater Studiorum — Università di Bologna</div>
-          <p class="edu-desc">Extensive coursework in Deep Learning, Machine Learning, Computer Vision, and NLP. Excelled in Applied AI group projects.</p>
-        </div>
-        <div class="edu-card reveal">
-          <div class="edu-year">2018 — 2021</div>
-          <div class="edu-degree">B.Sc. Computer Science</div>
-          <div class="edu-uni">Università della Calabria — Rende</div>
-          <p class="edu-desc">Broad foundation in Python, Java, and C++. Projects across multiple domains.</p>
-          <div class="edu-award">⭐ Best Students Award — 2019</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="section-header reveal">
-        <span class="section-num">04</span>
-        <h2 class="section-title">Contact</h2>
-      </div>
-      <div class="contact-row">
-        <a href="/cdn-cgi/l/email-protection#b2d5d3d0c0dbd7ded7c0dbc1dbdcddf2d5dfd3dbde9cd1dddf" class="contact-card reveal">
-          <span class="contact-label">Email</span>
-          <span class="contact-value"><span class="__cf_email__" data-cfemail="610600031308040d04130812080f0e21060c00080d4f020e0c">[email&#160;protected]</span></span>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="https://github.com/Gabry23" target="_blank" class="contact-card reveal">
-          <span class="contact-label">GitHub</span>
-          <span class="contact-value">github.com/Gabry23</span>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="tel:+393420943167" class="contact-card reveal">
-          <span class="contact-label">Phone</span>
-          <span class="contact-value">+39 342 094 3167</span>
-          <span class="contact-arrow">→</span>
-        </a>
-      </div>
-    </section>
-
-  </main>
-</div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-deco
+</body>
+</html>
